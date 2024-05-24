@@ -1,0 +1,294 @@
+@prefix : <http://www.csd.auth.gr/spotify#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.csd.auth.gr/spotify#> .
+
+<http://www.csd.auth.gr/spotify> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.csd.auth.gr/spotify#includes
+:includes rdf:type owl:ObjectProperty ;
+          rdfs:domain :SpotifyAlbum ;
+          rdfs:range :SpotifyTrack .
+
+
+###  http://www.csd.auth.gr/spotify#isPrimaryArtistOf
+:isPrimaryArtistOf rdf:type owl:ObjectProperty ;
+                   owl:inverseOf :primaryArtist ;
+                   rdfs:domain :SpotifyArtist ;
+                   rdfs:range :SpotifyTrack .
+
+
+###  http://www.csd.auth.gr/spotify#partOf
+:partOf rdf:type owl:ObjectProperty ;
+        rdfs:domain :SpotifyTrack ;
+        rdfs:range :SpotifyAlbum .
+
+
+###  http://www.csd.auth.gr/spotify#primaryArtist
+:primaryArtist rdf:type owl:ObjectProperty ;
+               rdfs:domain :SpotifyTrack ;
+               rdfs:range :SpotifyArtist .
+
+
+###  http://www.csd.auth.gr/spotify#uploaded
+:uploaded rdf:type owl:ObjectProperty ;
+          owl:inverseOf :uploadedBy ;
+          rdfs:domain :YouTubeChannel ;
+          rdfs:range :YouTubeVideo .
+
+
+###  http://www.csd.auth.gr/spotify#uploadedBy
+:uploadedBy rdf:type owl:ObjectProperty ;
+            rdfs:domain :YouTubeVideo ;
+            rdfs:range :YouTubeChannel .
+
+
+###  http://www.csd.auth.gr/spotify#usedIn
+:usedIn rdf:type owl:ObjectProperty ;
+        owl:inverseOf :uses ;
+        rdfs:domain :SpotifyTrack ;
+        rdfs:range :YouTubeVideo .
+
+
+###  http://www.csd.auth.gr/spotify#uses
+:uses rdf:type owl:ObjectProperty ;
+      rdfs:domain :YouTubeVideo ;
+      rdfs:range :SpotifyTrack .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.csd.auth.gr/spotify#acousticness
+:acousticness rdf:type owl:DatatypeProperty ;
+              rdfs:domain :SpotifyTrack ;
+              rdfs:range xsd:float .
+
+
+###  http://www.csd.auth.gr/spotify#albumTitle
+:albumTitle rdf:type owl:DatatypeProperty ;
+            rdfs:domain :SpotifyAlbum ;
+            rdfs:range xsd:string .
+
+
+###  http://www.csd.auth.gr/spotify#albumType
+:albumType rdf:type owl:DatatypeProperty ;
+           rdfs:domain :SpotifyAlbum ;
+           rdfs:range [ rdf:type rdfs:Datatype ;
+                        owl:oneOf [ rdf:type rdf:List ;
+                                    rdf:first "album" ;
+                                    rdf:rest [ rdf:type rdf:List ;
+                                               rdf:first "single" ;
+                                               rdf:rest rdf:nil
+                                             ]
+                                  ]
+                      ] .
+
+
+###  http://www.csd.auth.gr/spotify#artistName
+:artistName rdf:type owl:DatatypeProperty ;
+            rdfs:domain :SpotifyArtist ;
+            rdfs:range xsd:string .
+
+
+###  http://www.csd.auth.gr/spotify#channelName
+:channelName rdf:type owl:DatatypeProperty ;
+             rdfs:domain :YouTubeChannel ;
+             rdfs:range xsd:string .
+
+
+###  http://www.csd.auth.gr/spotify#dailyStreams
+:dailyStreams rdf:type owl:DatatypeProperty ;
+              rdfs:domain :SpotifyArtist ;
+              rdfs:range xsd:float .
+
+
+###  http://www.csd.auth.gr/spotify#danceability
+:danceability rdf:type owl:DatatypeProperty ;
+              rdfs:domain :SpotifyTrack ;
+              rdfs:range xsd:float .
+
+
+###  http://www.csd.auth.gr/spotify#description
+:description rdf:type owl:DatatypeProperty ;
+             rdfs:domain :YouTubeVideo ;
+             rdfs:range xsd:string .
+
+
+###  http://www.csd.auth.gr/spotify#duration
+:duration rdf:type owl:DatatypeProperty ;
+          rdfs:domain :SpotifyTrack ;
+          rdfs:range xsd:decimal .
+
+
+###  http://www.csd.auth.gr/spotify#energy
+:energy rdf:type owl:DatatypeProperty ;
+        rdfs:domain :SpotifyTrack ;
+        rdfs:range xsd:float .
+
+
+###  http://www.csd.auth.gr/spotify#featureStreams
+:featureStreams rdf:type owl:DatatypeProperty ;
+                rdfs:domain :SpotifyArtist ;
+                rdfs:range xsd:float .
+
+
+###  http://www.csd.auth.gr/spotify#instrumentalness
+:instrumentalness rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :SpotifyTrack ;
+                  rdfs:range xsd:float .
+
+
+###  http://www.csd.auth.gr/spotify#key
+:key rdf:type owl:DatatypeProperty ;
+     rdfs:domain :SpotifyTrack ;
+     rdfs:range xsd:decimal .
+
+
+###  http://www.csd.auth.gr/spotify#leadStreams
+:leadStreams rdf:type owl:DatatypeProperty ;
+             rdfs:domain :SpotifyArtist ;
+             rdfs:range xsd:float .
+
+
+###  http://www.csd.auth.gr/spotify#licensed
+:licensed rdf:type owl:DatatypeProperty ;
+          rdfs:domain :YouTubeVideo ;
+          rdfs:range xsd:boolean .
+
+
+###  http://www.csd.auth.gr/spotify#likes
+:likes rdf:type owl:DatatypeProperty ;
+       rdfs:domain :YouTubeVideo ;
+       rdfs:range xsd:decimal .
+
+
+###  http://www.csd.auth.gr/spotify#liveness
+:liveness rdf:type owl:DatatypeProperty ;
+          rdfs:domain :SpotifyTrack ;
+          rdfs:range xsd:float .
+
+
+###  http://www.csd.auth.gr/spotify#loudness
+:loudness rdf:type owl:DatatypeProperty ;
+          rdfs:domain :SpotifyTrack ;
+          rdfs:range xsd:float .
+
+
+###  http://www.csd.auth.gr/spotify#officialVideo
+:officialVideo rdf:type owl:DatatypeProperty ;
+               rdfs:domain :YouTubeVideo ;
+               rdfs:range xsd:boolean .
+
+
+###  http://www.csd.auth.gr/spotify#soloStreams
+:soloStreams rdf:type owl:DatatypeProperty ;
+             rdfs:domain :SpotifyArtist ;
+             rdfs:range xsd:float .
+
+
+###  http://www.csd.auth.gr/spotify#speechiness
+:speechiness rdf:type owl:DatatypeProperty ;
+             rdfs:domain :SpotifyTrack ;
+             rdfs:range xsd:float .
+
+
+###  http://www.csd.auth.gr/spotify#spotifyUri
+:spotifyUri rdf:type owl:DatatypeProperty ;
+            rdfs:domain :SpotifyTrack ;
+            rdfs:range xsd:anyURI .
+
+
+###  http://www.csd.auth.gr/spotify#spotifyUrl
+:spotifyUrl rdf:type owl:DatatypeProperty ;
+            rdfs:domain :SpotifyArtist ;
+            rdfs:range xsd:anyURI .
+
+
+###  http://www.csd.auth.gr/spotify#streams
+:streams rdf:type owl:DatatypeProperty ;
+         rdfs:domain :SpotifyTrack ;
+         rdfs:range xsd:decimal .
+
+
+###  http://www.csd.auth.gr/spotify#tempo
+:tempo rdf:type owl:DatatypeProperty ;
+       rdfs:domain :SpotifyTrack ;
+       rdfs:range xsd:float .
+
+
+###  http://www.csd.auth.gr/spotify#totalComments
+:totalComments rdf:type owl:DatatypeProperty ;
+               rdfs:domain :YouTubeVideo ;
+               rdfs:range xsd:decimal .
+
+
+###  http://www.csd.auth.gr/spotify#totalStreams
+:totalStreams rdf:type owl:DatatypeProperty ;
+              rdfs:domain :SpotifyArtist ;
+              rdfs:range xsd:float .
+
+
+###  http://www.csd.auth.gr/spotify#trackTitle
+:trackTitle rdf:type owl:DatatypeProperty ;
+            rdfs:domain :SpotifyTrack ;
+            rdfs:range xsd:string .
+
+
+###  http://www.csd.auth.gr/spotify#valence
+:valence rdf:type owl:DatatypeProperty ;
+         rdfs:domain :SpotifyTrack ;
+         rdfs:range xsd:float .
+
+
+###  http://www.csd.auth.gr/spotify#views
+:views rdf:type owl:DatatypeProperty ;
+       rdfs:domain :YouTubeVideo ;
+       rdfs:range xsd:decimal .
+
+
+###  http://www.csd.auth.gr/spotify#youtubeTitle
+:youtubeTitle rdf:type owl:DatatypeProperty ;
+              rdfs:domain :YouTubeVideo ;
+              rdfs:range xsd:string .
+
+
+###  http://www.csd.auth.gr/spotify#youtubeUrl
+:youtubeUrl rdf:type owl:DatatypeProperty ;
+            rdfs:domain :YouTubeVideo ;
+            rdfs:range xsd:anyURI .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.csd.auth.gr/spotify#SpotifyAlbum
+:SpotifyAlbum rdf:type owl:Class .
+
+
+###  http://www.csd.auth.gr/spotify#SpotifyArtist
+:SpotifyArtist rdf:type owl:Class .
+
+
+###  http://www.csd.auth.gr/spotify#SpotifyTrack
+:SpotifyTrack rdf:type owl:Class .
+
+
+###  http://www.csd.auth.gr/spotify#YouTubeChannel
+:YouTubeChannel rdf:type owl:Class .
+
+
+###  http://www.csd.auth.gr/spotify#YouTubeVideo
+:YouTubeVideo rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi

@@ -1,0 +1,478 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix domain: <http://www.csd.auth.gr/spotify#>.
+
+@base <http://www.csd.auth.gr/spotify/>.
+
+<#ArtistDataPropertiesMapping1> a rr:TriplesMap;
+                 rml:logicalSource [
+                     rml:source "../../datasets/updated/artists_cleaned.csv" ;
+                     rml:referenceFormulation ql:CSV
+                   ];
+
+                 rr:subjectMap [
+                     rr:template "http://www.csd.auth.gr/spotify/data/artists/{Artist_id}";
+                     rr:class domain:SpotifyArtist
+                   ];
+
+                 rr:predicateObjectMap [
+                     rr:predicate domain:artistName;
+                     rr:objectMap [
+                                    rml:reference "Artist";
+                                    rr:datatype xsd:string
+                                  ]
+                   ];
+
+                 rr:predicateObjectMap [
+                     rr:predicate domain:dailyStreams;
+                     rr:objectMap [
+                                    rml:reference "Daily";
+                                    rr:datatype xsd:float
+                                  ]
+                   ];
+
+                 rr:predicateObjectMap [
+                     rr:predicate domain:featureStreams;
+                     rr:objectMap [
+                                    rml:reference "As feature";
+                                    rr:datatype xsd:float
+                                  ]
+                   ];
+
+                 rr:predicateObjectMap [
+                     rr:predicate domain:leadStreams;
+                     rr:objectMap [
+                                    rml:reference "As lead";
+                                    rr:datatype xsd:float
+                                  ]
+                   ];
+
+                 rr:predicateObjectMap [
+                     rr:predicate domain:soloStreams;
+                     rr:objectMap [
+                                    rml:reference "Solo";
+                                    rr:datatype xsd:float
+                                  ]
+                   ];
+
+                 rr:predicateObjectMap [
+                     rr:predicate domain:totalStreams;
+                     rr:objectMap [
+                                    rml:reference "Streams";
+                                    rr:datatype xsd:float
+                                  ]
+                   ].
+
+<#ArtistDataPropertiesMapping2> a rr:TriplesMap;
+                 rml:logicalSource [
+                     rml:source "../../datasets/updated/spotify_youtube_cleaned.csv" ;
+                     rml:referenceFormulation ql:CSV
+                   ];
+
+                 rr:subjectMap [
+                     rr:template "http://www.csd.auth.gr/spotify/data/artists/{Artist_id}";
+                     rr:class domain:SpotifyArtist
+                   ];
+
+                 rr:predicateObjectMap [
+                     rr:predicate rdfs:label;
+                     rr:objectMap [
+                                     rml:reference "Artist";
+                                     rr:datatype rdfs:Literal
+                                  ]
+                   ];
+
+                 rr:predicateObjectMap [
+                     rr:predicate domain:spotifyUrl;
+                     rr:objectMap [
+                                    rml:reference "Url_spotify";
+                                    rr:datatype xsd:anyURI
+                                  ]
+                   ].
+
+<#ArtistObjectPropertiesMapping> a rr:TriplesMap;
+                 rml:logicalSource [
+                     rml:source "../../datasets/updated/spotify_youtube_cleaned.csv" ;
+                     rml:referenceFormulation ql:CSV
+                   ];
+
+                 rr:subjectMap [
+                     rr:template "http://www.csd.auth.gr/spotify/data/artists/{Artist_id}";
+                     rr:class domain:SpotifyArtist
+                   ];
+
+                 rr:predicateObjectMap [
+                     rr:predicate domain:isPrimaryArtistOf;
+                     rr:objectMap [
+                                    rr:template "http://www.csd.auth.gr/spotify/data/tracks/{Track_id}";
+                                  ]
+                   ].
+
+<#TrackDataPropertiesMapping> a rr:TriplesMap;
+                 rml:logicalSource [
+                       rml:source "../../datasets/updated/spotify_youtube_cleaned.csv" ;
+                       rml:referenceFormulation ql:CSV
+                   ];
+
+                 rr:subjectMap [
+                       rr:template "http://www.csd.auth.gr/spotify/data/tracks/{Track_id}";
+                       rr:class domain:SpotifyTrack
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate rdfs:label;
+                       rr:objectMap [
+                                         rml:reference "Track";
+                                         rr:datatype rdfs:Literal
+                                    ]
+                    ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:acousticness;
+                       rr:objectMap [
+                                        rml:reference "Acousticness";
+                                        rr:datatype xsd:float
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:danceability;
+                       rr:objectMap [
+                                        rml:reference "Danceability";
+                                        rr:datatype xsd:float
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:duration;
+                       rr:objectMap [
+                                        rml:reference "Duration_ms";
+                                        rr:datatype xsd:decimal
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:energy;
+                       rr:objectMap [
+                                        rml:reference "Energy";
+                                        rr:datatype xsd:float
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:instrumentalnesss;
+                       rr:objectMap [
+                                        rml:reference "Instrumentalness";
+                                        rr:datatype xsd:float
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:key;
+                       rr:objectMap [
+                                        rml:reference "Key";
+                                        rr:datatype xsd:decimal
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:liveness;
+                       rr:objectMap [
+                                        rml:reference "Liveness";
+                                        rr:datatype xsd:float
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:loudness;
+                       rr:objectMap [
+                                        rml:reference "Loudness";
+                                        rr:datatype xsd:float
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:speechiness;
+                       rr:objectMap [
+                                        rml:reference "Speechiness";
+                                        rr:datatype xsd:float
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:spotifyUri;
+                       rr:objectMap [
+                                        rml:reference "Uri";
+                                        rr:datatype xsd:anyURI
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:streams;
+                       rr:objectMap [
+                                        rml:reference "Stream";
+                                        rr:datatype xsd:decimal
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:tempo;
+                       rr:objectMap [
+                                        rml:reference "Tempo";
+                                        rr:datatype xsd:float
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:trackTitle;
+                       rr:objectMap [
+                                        rml:reference "Track";
+                                        rr:datatype xsd:string
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:valence;
+                       rr:objectMap [
+                                        rml:reference "Valence";
+                                        rr:datatype xsd:float
+                                    ]
+                   ].
+
+<#TrackObjectPropertiesMapping> a rr:TriplesMap;
+                 rml:logicalSource [
+                       rml:source "../../datasets/updated/spotify_youtube_cleaned.csv" ;
+                       rml:referenceFormulation ql:CSV
+                   ];
+
+                 rr:subjectMap [
+                       rr:template "http://www.csd.auth.gr/spotify/data/tracks/{Track_id}";
+                       rr:class domain:SpotifyTrack
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:partOf;
+                       rr:objectMap [
+                                        rr:template "http://www.csd.auth.gr/spotify/data/albums/{Album}";
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:primaryArtist;
+                       rr:objectMap [
+                                        rr:template "http://www.csd.auth.gr/spotify/data/artists/{Artist_id}";
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:usedIn;
+                       rr:objectMap [
+                                        rr:template "http://www.csd.auth.gr/spotify/data/videos/{Video_id}";
+                                    ]
+                   ].
+
+<#AlbumDataPropertiesMapping> a rr:TriplesMap;
+                 rml:logicalSource [
+                       rml:source "../../datasets/updated/spotify_youtube_cleaned.csv" ;
+                       rml:referenceFormulation ql:CSV
+                   ];
+
+                 rr:subjectMap [
+                       rr:template "http://www.csd.auth.gr/spotify/data/albums/{Album}";
+                       rr:class domain:SpotifyAlbum
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate rdfs:label;
+                       rr:objectMap [
+                                         rml:reference "Album";
+                                         rr:datatype rdfs:Literal
+                                    ]
+                   ];
+
+                              rr:predicateObjectMap [
+                       rr:predicate domain:albumTitle;
+                       rr:objectMap [
+                                         rml:reference "Album";
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:albumType;
+                       rr:objectMap [
+                                        rml:reference "Album_type";
+                                    ]
+                   ].
+
+<#AlbumObjectPropertiesMapping> a rr:TriplesMap;
+                 rml:logicalSource [
+                       rml:source "../../datasets/updated/spotify_youtube_cleaned.csv" ;
+                       rml:referenceFormulation ql:CSV
+                   ];
+
+                 rr:subjectMap [
+                       rr:template "http://www.csd.auth.gr/spotify/data/albums/{Album}";
+                       rr:class domain:SpotifyAlbum
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:includes;
+                       rr:objectMap [
+                                        rr:template "http://www.csd.auth.gr/spotify/data/tracks/{Track_id}";
+                                    ]
+                   ].
+
+<#VideoDataPropertiesMapping> a rr:TriplesMap;
+                 rml:logicalSource [
+                       rml:source "../../datasets/updated/spotify_youtube_cleaned.csv" ;
+                       rml:referenceFormulation ql:CSV
+                   ];
+
+                 rr:subjectMap [
+                       rr:template "http://www.csd.auth.gr/spotify/data/videos/{Video_id}";
+                       rr:class domain:YouTubeVideo
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate rdfs:label;
+                       rr:objectMap [
+                                        rml:reference "Title";
+                                        rr:datatype rdfs:Literal
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:description;
+                       rr:objectMap [
+                                        rml:reference "Description";
+                                        rr:datatype xsd:string
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:licensed;
+                       rr:objectMap [
+                                        rml:reference "Licensed";
+                                        rr:datatype xsd:boolean
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:likes;
+                       rr:objectMap [
+                                        rml:reference "Likes";
+                                        rr:datatype xsd:decimal
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:officialVideo;
+                       rr:objectMap [
+                                        rml:reference "official_video";
+                                        rr:datatype xsd:boolean
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:totalComments;
+                       rr:objectMap [
+                                        rml:reference "Comments";
+                                        rr:datatype xsd:decimal
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:views;
+                       rr:objectMap [
+                                        rml:reference "Views";
+                                        rr:datatype xsd:decimal
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:youtubeTitle;
+                       rr:objectMap [
+                                        rml:reference "Title";
+                                        rr:datatype xsd:string
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:youtubeUrl;
+                       rr:objectMap [
+                                        rml:reference "Url_youtube";
+                                        rr:datatype xsd:anyURI
+                                    ]
+                   ].
+
+<#VideoObjectPropertiesMapping> a rr:TriplesMap;
+                 rml:logicalSource [
+                       rml:source "../../datasets/updated/spotify_youtube_cleaned.csv" ;
+                       rml:referenceFormulation ql:CSV
+                   ];
+
+                 rr:subjectMap [
+                       rr:template "http://www.csd.auth.gr/spotify/data/videos/{Video_id}";
+                       rr:class domain:YouTubeVideo
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:uploadedBy;
+                       rr:objectMap [
+                                        rr:template "http://www.csd.auth.gr/spotify/data/channels/{Channel}";
+                                    ]
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:uses;
+                       rr:objectMap [
+                                        rr:template "http://www.csd.auth.gr/spotify/data/tracks/{Track_id}";
+                                    ]
+                   ].
+
+<#ChannelDataPropertiesMapping> a rr:TriplesMap;
+                 rml:logicalSource [
+                       rml:source "../../datasets/updated/spotify_youtube_cleaned.csv" ;
+                       rml:referenceFormulation ql:CSV
+                   ];
+
+                 rr:subjectMap [
+                       rr:template "http://www.csd.auth.gr/spotify/data/channels/{Channel}";
+                       rr:class domain:YouTubeChannel
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate rdfs:label;
+                       rr:objectMap [
+                                        rml:reference "Channel";
+                                        rr:datatype rdfs:Literal
+                                    ]
+                    ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:channelName;
+                       rr:objectMap [
+                                        rml:reference "Channel";
+                                    ]
+                   ].
+
+<#ChannelObjectPropertiesMapping> a rr:TriplesMap;
+                 rml:logicalSource [
+                       rml:source "../../datasets/updated/spotify_youtube_cleaned.csv" ;
+                       rml:referenceFormulation ql:CSV
+                   ];
+
+                 rr:subjectMap [
+                       rr:template "http://www.csd.auth.gr/spotify/data/channels/{Channel}";
+                       rr:class domain:YouTubeChannel
+                   ];
+
+                 rr:predicateObjectMap [
+                       rr:predicate domain:uploaded;
+                       rr:objectMap [
+                                        rr:template "http://www.csd.auth.gr/spotify/data/videos/{Video_id}";
+                                    ]
+                   ].
