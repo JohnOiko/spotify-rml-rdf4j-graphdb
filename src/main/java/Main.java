@@ -26,7 +26,7 @@ public class Main {
         // Define the location of the necessary files
         String rootFolder = "./src/main/resources/";
         String templateFile = "ontologies/rml/spotify.mappings.ttl";
-        String outputFile = "ontologies/triplets/spotifytriplets.ttl";
+        String outputFile = "ontologies/triplets/spotify_triplets.ttl";
         String domainOntologyFile = "ontologies/domain/spotify.owl";
 
         // Run the RML mapper
@@ -136,7 +136,7 @@ public class Main {
         queryString += "    ?track spot:usedIn ?video . \n";
         queryString += "    ?artist spot:isPrimaryArtistOf ?track ; \n";
         queryString += "            spot:artistName ?artist_name ; \n";
-        queryString += "    \t\tspot:totalStreams ?total_streams_mil . \n";
+        queryString += "            spot:totalStreams ?total_streams_mil . \n";
         queryString += "} \n";
         queryString += "group by ?artist_name ?total_streams_mil \n";
         queryString += "order by desc(?total_clicks) \n";
