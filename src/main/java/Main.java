@@ -130,8 +130,10 @@ public class Main {
         queryString += "PREFIX spot: <http://www.csd.auth.gr/spotify#> \n";
         queryString += "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n";
         queryString += " \n";
-        queryString += "select ?artist_name (xsd:integer(?total_streams_mil * 1000000) as ?total_streams) \n";
-        queryString += "(sum(?views) as ?total_video_views) (?total_streams + ?total_video_views as ?total_clicks)  where { \n";
+        queryString += "select ?artist_name (xsd:integer(?total_streams_mil * 1000000) \n";
+        queryString += "as ?total_streams) (xsd:integer(sum(?views)) as ?total_video_views) \n";
+        queryString += "(xsd:integer(?total_streams) + ?total_video_views as ?total_clicks) \n";
+        queryString += "where { \n";
         queryString += "    ?video spot:views ?views . \n";
         queryString += "    ?track spot:usedIn ?video . \n";
         queryString += "    ?artist spot:isPrimaryArtistOf ?track ; \n";
@@ -179,8 +181,11 @@ public class Main {
         // Define the query as a string
         String queryString = "";
         queryString += "PREFIX spot: <http://www.csd.auth.gr/spotify#> \n";
+        queryString += "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n";
         queryString += " \n";
-        queryString += "select ?album_title ?artist_name (sum(?streams) as ?album_streams) where { \n";
+        queryString += "select ?album_title ?artist_name  \n";
+        queryString += "(xsd:integer(sum(?streams)) as ?album_streams) \n";
+        queryString += "where {  \n";
         queryString += "    ?album spot:includes ?track . \n";
         queryString += "    ?track spot:primaryArtist ?artist . \n";
         queryString += "    ?album spot:albumTitle ?album_title . \n";
@@ -208,14 +213,14 @@ public class Main {
         }
 
         // Add the stored query results as columns to a table
-        Table queryResult = Table.create("Top 5 most streamed and viewed artists").addColumns(
+        Table queryResult = Table.create("Top 5 most streamed and viewed albums").addColumns(
                 StringColumn.create("album_title", album_titles),
                 StringColumn.create("artist_name", artist_names),
                 StringColumn.create("album_streams", album_streams)
         );
 
         // Print the results
-        System.out.println("-Second SPARQL query (top 5 most streamed and viewed artists):\n\n" + queryString + "\n");
+        System.out.println("-Second SPARQL query (top 5 most streamed and viewed albums):\n\n" + queryString + "\n");
         System.out.println("-Second SPARQL query results:\n");
         System.out.println(queryResult.printAll() + "\n");
         System.out.println("=".repeat(99) + "\n");
@@ -225,9 +230,12 @@ public class Main {
         // Define the query as a string
         String queryString = "";
         queryString += "PREFIX spot: <http://www.csd.auth.gr/spotify#>  \n";
+        queryString += "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n";
         queryString += " \n";
-        queryString += "select ?artist_name (round(sum(?likes)/sum(?views)* 10000)/10000 as ?total_view_like_ratio) \n";
-        queryString += "(sum(?likes) as ?total_likes) (sum(?views) as ?total_views) where { \n";
+        queryString += "select ?artist_name (round(sum(?likes)/sum(?views)* 10000)/10000 \n";
+        queryString += "as ?total_view_like_ratio) (xsd:integer(sum(?likes)) as ?total_likes) \n";
+        queryString += "(sum(xsd:integer(?views)) as ?total_views) \n";
+        queryString += "where { \n";
         queryString += "    ?video spot:views ?views . \n";
         queryString += "    ?video spot:likes ?likes . \n";
         queryString += "    ?track spot:usedIn ?video . \n";
@@ -237,7 +245,7 @@ public class Main {
         queryString += "group by ?artist ?artist_name \n";
         queryString += "having(?total_views >= 1000000000) \n";
         queryString += "order by desc(?total_view_like_ratio) \n";
-        queryString += "LIMIT 25";
+        queryString += "LIMIT 10";
 
         TupleQuery query = connection.prepareTupleQuery(queryString);
 
@@ -258,7 +266,7 @@ public class Main {
         }
 
         // Add the stored query results as columns to a table
-        Table queryResult = Table.create("Top 25 highest likes to views ratio artists with at least a billion views").addColumns(
+        Table queryResult = Table.create("Top 10 highest likes to views ratio artists with at least a billion views").addColumns(
                 StringColumn.create("artist_name", artist_names),
                 StringColumn.create("total_view_like_ratio", total_view_like_ratios),
                 StringColumn.create("total_likes", total_likes),
@@ -266,7 +274,7 @@ public class Main {
         );
 
         // Print the results
-        System.out.println("-Third SPARQL query (top 25 highest likes to views ratio artists with at least a billion views):\n\n" + queryString + "\n");
+        System.out.println("-Third SPARQL query (top 10 highest likes to views ratio artists with at least a billion views):\n\n" + queryString + "\n");
         System.out.println("-Third SPARQL query results:\n");
         System.out.println(queryResult.printAll() + "\n");
         System.out.println("=".repeat(99) + "\n");

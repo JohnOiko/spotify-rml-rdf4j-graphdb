@@ -3,23 +3,28 @@
 PREFIX spot: <http://www.csd.auth.gr/spotify#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select ?artist_name (xsd:integer(?total_streams_mil * 1000000) as ?total_streams)
-(sum(?views) as ?total_video_views) (?total_streams + ?total_video_views as ?total_clicks)  where {
+select ?artist_name (xsd:integer(?total_streams_mil * 1000000)
+as ?total_streams) (xsd:integer(sum(?views)) as ?total_video_views)
+(xsd:integer(?total_streams) + ?total_video_views as ?total_clicks)
+where {
     ?video spot:views ?views .
     ?track spot:usedIn ?video .
     ?artist spot:isPrimaryArtistOf ?track ;
             spot:artistName ?artist_name ;
-    		spot:totalStreams ?total_streams_mil .
+            spot:totalStreams ?total_streams_mil .
 }
 group by ?artist_name ?total_streams_mil
 order by desc(?total_clicks)
 LIMIT 10
 
--Second SPARQL query (top 5 most streamed and viewed artists):
+-Second SPARQL query (top 5 most streamed and viewed albums):
 
 PREFIX spot: <http://www.csd.auth.gr/spotify#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select ?album_title ?artist_name (sum(?streams) as ?album_streams) where {
+select ?album_title ?artist_name
+(xsd:integer(sum(?streams)) as ?album_streams)
+where {
     ?album spot:includes ?track .
     ?track spot:primaryArtist ?artist .
     ?album spot:albumTitle ?album_title .
@@ -30,19 +35,22 @@ group by ?album_title ?artist_name
 order by desc(?album_streams)
 LIMIT 5
 
--Third SPARQL query (top 25 highest likes to views ratio artists with at least a billion views):
+-Third SPARQL query (top 10 highest likes to views ratio artists with at least a billion views):
  
 PREFIX spot: <http://www.csd.auth.gr/spotify#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select ?artist_name (round(sum(?likes)/sum(?views)* 10000)/10000 as ?total_view_like_ratio)
-(sum(?likes) as ?total_likes) (sum(?views) as ?total_views) where {
+select ?artist_name (round(sum(?likes)/sum(?views)* 10000)/10000
+as ?total_view_like_ratio) (xsd:integer(sum(?likes)) as ?total_likes)
+(sum(xsd:integer(?views)) as ?total_views)
+where {
     ?video spot:views ?views .
     ?video spot:likes ?likes .
     ?track spot:usedIn ?video .
     ?artist spot:isPrimaryArtistOf ?track ;
             spot:artistName ?artist_name .
-} 
+}
 group by ?artist ?artist_name
 having(?total_views >= 1000000000)
 order by desc(?total_view_like_ratio)
-LIMIT 25
+LIMIT 10
