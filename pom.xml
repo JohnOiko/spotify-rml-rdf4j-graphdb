@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>gr.auth.csd</groupId>
-    <artifactId>spotify-rml-rdf4k-graphdb-old</artifactId>
+    <artifactId>spotify-rml-rdf4j-graphdb-old</artifactId>
     <version>1.0.0</version>
 
     <properties>
